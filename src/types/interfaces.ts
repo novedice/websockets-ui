@@ -78,6 +78,12 @@ export interface ICommandRoomPlayer {
     id: 0;
 };
 
+export interface AddUserToRoom {
+    type: typesOfCommandsRoom;
+    data: addUserToRoom
+    id: 0;
+};
+
 export interface ICommandRoomServer {
     type: typesOfCommandsRoom;
     data: createGameData | updateRoom;

@@ -2,7 +2,7 @@ import {  players, rooms } from "../db/database.ts";
 import { createID } from "../functions/createIdFunction.ts";
 import { createPlayerData } from "../types/interfaces.ts";
 import type { WebSocket } from "ws";
-import { connections } from "./loginHandler.ts";
+import { connections, nameConnections } from "./loginHandler.ts";
 import { updateWinnersHandler } from "./updateWinnersHandler.ts";
 
 export const createPlayer = (data: createPlayerData, ws: WebSocket) => {
@@ -12,7 +12,8 @@ export const createPlayer = (data: createPlayerData, ws: WebSocket) => {
   players.push({...data, id: playerId});
   console.log('players:', players);
  
-  connections.set(ws, data.name)
+  connections.set(ws, data.name);
+  nameConnections.set(data.name, ws);
 
   ws.send(JSON.stringify({
         type: 'reg', 

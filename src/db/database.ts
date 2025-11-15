@@ -6,5 +6,7 @@ export const rooms: updateRoom[] = [];
 
 export const winners: winner[] = [];
 
+export const games: {idGame: number | string, idPlayer1: number | string,  idPlayer2: number|string} [] = [];
+
 
 

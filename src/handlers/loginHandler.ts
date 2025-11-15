@@ -5,6 +5,7 @@ import type { WebSocket } from "ws";
 import { updateWinnersHandler } from "./updateWinnersHandler.ts";
 
 export const connections = new Map<WebSocket, string>();
+export const nameConnections = new Map<string, WebSocket>()
 
 export const loginHandler = (data: createPlayerData, ws: WebSocket) => {
   const index = players.findIndex((player) => player.name === data.name);
