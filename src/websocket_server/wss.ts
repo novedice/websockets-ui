@@ -1,9 +1,15 @@
 import { WebSocketServer } from "ws";
-// import { httpServer } from "http_server/http_server.ts";
 import { Server } from "node:http";
-// import { PORT } from "../index.ts";
-
-// const PORT = process.env.PORT ? Number(process.env.PORT) : 8181
+import { ICommandPlayerClient} from "../types/interfaces.ts";
+import { typesOfCommandsGame, typesOfCommandsRoom, typesOfCommandsShips, typesOfCommandsUsers } from "../types/enums.ts";
+import { loginHandler } from "../handlers/loginHandler.ts";
+import { updateWinnersHandler } from "../handlers/updateWinnersHandler.ts";
+import { createGameHandler } from "../handlers/createGameHandler.ts";
+import { createRoomHandler } from "../handlers/createRoomHandler.ts";
+import { addShipsHandler } from "../handlers/addShipsHandler.ts";
+import { addUserToRoomHandler } from "../handlers/addUserToRoomHandler.ts";
+import { attackHandler } from "../handlers/attackHandler.ts";
+import { randomAttackHandler } from "../handlers/randomAttackHandler.ts";
 
 export const createWebsocketServer = (httpServer: Server) => {
 
@@ -12,14 +18,33 @@ export const createWebsocketServer = (httpServer: Server) => {
   wss.on("connection", (ws) => {
   console.log("connection done");
 
-  ws.on("message", (data) => {
-    console.log("Message from client:", data.toString());
+  ws.on("message", (message) => {
+    const messageData: ICommandPlayerClient = JSON.parse(message.toString());
+    console.log("Message from client parsed:", messageData);
+    try {
+      if (messageData.type === typesOfCommandsUsers.REG) {
+        loginHandler(JSON.parse((messageData.data).toString()), ws);
+      } else if (messageData.type === typesOfCommandsUsers.UPDATE_WINNERS) {
+        updateWinnersHandler(ws, JSON.parse((messageData.data).toString()));
+      } else if (messageData.type === typesOfCommandsRoom.CREATE_GAME) {
+        createGameHandler(ws);
+      } else if (messageData.type === typesOfCommandsRoom.CREATE_ROOM) {
+        createRoomHandler(ws);
+      } else if (messageData.type === typesOfCommandsRoom.ADD_USER_FOR_ROOM) {
+        addUserToRoomHandler(JSON.parse((messageData.data).toString()), ws);
+      } else if (messageData.type === typesOfCommandsShips.ADD_SHIP) {
+        addShipsHandler(JSON.parse((messageData.data).toString()), ws);
+      } else if (messageData.type === typesOfCommandsGame.ATTACK) {
+        attackHandler(JSON.parse((messageData.data).toString()), ws);
+      } else if (messageData.type === typesOfCommandsGame.RANDOM_ATTACK) {
+        randomAttackHandler(JSON.parse((messageData.data).toString()), ws);
+      } 
+  } catch (e)  {
+      console.log('error: ', e)
+    }
   });
-
   ws.on("close", () => console.log("disconnected"));
   ws.on("error", console.error);
 
 });
-
-console.log("WebSocket server is running");
 }

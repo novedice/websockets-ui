@@ -1,5 +1,11 @@
 import { shipsSizes, status, typesOfCommandsGame, typesOfCommandsRoom, typesOfCommandsShips, typesOfCommandsUsers } from "./enums.ts"
 
+export interface IMessageClient {
+  type: string;
+  data: unknown;
+  id: 0;
+}
+
 export type roomUser = {
   name: string;
   index: number | string;
@@ -31,6 +37,12 @@ export type createPlayerData = {
   password: string;
 };
 
+export interface IPlayer {
+  name: string,
+  password: string,
+  id: string | number
+}
+
 export type position = {
   x: number;
   y: number;
@@ -48,15 +60,15 @@ export interface updateRoom {
   roomUsers: roomUser[];
 };
 
-export interface ICommandPlayerClient {
-    type: "reg";
+export interface ICommandPlayerClient extends IMessageClient {
+    type: typesOfCommandsUsers.REG;
     data: createPlayerData;
     id: 0,
 };
 
-export interface ICommandPlayerServer {
-    type: typesOfCommandsUsers;
-    data: loginData | winner [];
+export interface ICommandPlayerServer extends IMessageClient {
+    type: typesOfCommandsUsers.REG;
+    data: loginData;
     id: 0,
 };
 
