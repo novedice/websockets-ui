@@ -5,7 +5,6 @@ import { rooms } from "../db/database.ts";
 import { createGameHandler } from "./createGameHandler.ts";
 
 export const addUserToRoomHandler = (data: addUserToRoom, ws: WebSocket) => {
-  console.log('user to room', data);
   const player2Index: string = connections.get(ws) as string;
   const roomIndex = rooms.findIndex(room => room.roomId === data.indexRoom)
 

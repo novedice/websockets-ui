@@ -25,7 +25,6 @@ export const createWebsocketServer = (httpServer: Server) => {
 
   ws.on("message", (message) => {
     const messageData: ICommandPlayerClient | AddUserToRoom | ICommandShipsPlayer | ICommandGamePlayer = JSON.parse(message.toString());
-    console.log("Message from client parsed:", messageData);
     try {
       if (messageData.type === typesOfCommandsUsers.REG) {
         loginHandler(JSON.parse((messageData.data).toString()), ws);

@@ -4,7 +4,6 @@ import { games } from "../db/database.ts";
 // import { connections } from "./loginHandler.ts";
 
 export const attackHandler = (data: IAttack, ws: WebSocket) => {
-  console.log('attack', data);
   const thisGameIndex = games.findIndex(game => game.idGame === data.gameId);
   const thisGame = games[thisGameIndex];
   if (thisGame && thisGameIndex !== -1) {

@@ -2,7 +2,6 @@ import { IGameInfo } from "../types/interfaces.ts";
 import { nameConnections } from "./loginHandler.ts";
 
 export const startGameHandler = (game: IGameInfo) => {
-  console.log('start game');
 
   const player1id = game.idPlayer1.id;
   const player2id = game.idPlayer2.id;

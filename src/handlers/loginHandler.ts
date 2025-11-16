@@ -9,17 +9,11 @@ export const nameConnections = new Map<string | number, WebSocket>()
 
 export const loginHandler = (data: createPlayerData, ws: WebSocket) => {
   const index = players.findIndex((player) => player.name === data.name);
-  // console.log('data in login:', data);
-  // console.log('index:', index);
   if (index === -1) {
     createPlayer(data, ws);
   } else {
-    console.log('data in else login:', data);
     if (data.password === players[index]?.password) {
-      // console.log('data.password in if', data.password, ' data.name:', data.name);
-      // console.log('player.password in if', players[index].password, ' data.name:', players[index].name);
-      // console.log(players, players[index], index);
-      // console.log(`player ${data.name} exists`)
+
       ws.send(JSON.stringify({
         type: 'reg', 
         data: JSON.stringify({

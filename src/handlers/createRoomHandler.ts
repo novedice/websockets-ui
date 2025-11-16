@@ -19,11 +19,9 @@ export const createRoomHandler = (ws: WebSocket) => {
       ]
     }
     rooms.push(newRoom);
-    // console.log(rooms);
     ws.send(JSON.stringify({
       type: "update_room",
       data: JSON.stringify(rooms)
   }));
   }
-  // console.log('create room', data);
   }
