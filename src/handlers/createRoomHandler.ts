@@ -6,8 +6,8 @@ import { createID } from "../functions/createIdFunction.ts";
 
 export const createRoomHandler = (ws: WebSocket) => {
  
-  const playerName = connections.get(ws);
-  const index = players.findIndex(player => player.name === playerName);
+  const playerID = connections.get(ws);
+  const index = players.findIndex(player => player.id === playerID);
   if (players[index]) {
     const newRoom = {
       roomId: createID(),

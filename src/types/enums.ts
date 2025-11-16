@@ -12,7 +12,7 @@ export enum typesOfCommandsRoom {
 
 export enum typesOfCommandsShips {
   ADD_SHIP = "add_ships",
-  SRAT_GAME = "start_game"
+  START_GAME = "start_game"
 };
 
 export enum typesOfCommandsGame {

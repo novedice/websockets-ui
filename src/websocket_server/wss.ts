@@ -1,19 +1,19 @@
 import { WebSocketServer } from "ws";
 import { Server } from "node:http";
-import { AddUserToRoom, ICommandPlayerClient} from "../types/interfaces.ts";
+import { AddUserToRoom, ICommandGamePlayer, ICommandPlayerClient, ICommandShipsPlayer} from "../types/interfaces.ts";
 import { 
-  // typesOfCommandsGame, 
+  typesOfCommandsGame,
   typesOfCommandsRoom, 
-  // typesOfCommandsShips, 
+  typesOfCommandsShips, 
   typesOfCommandsUsers 
 } from "../types/enums.ts";
 import { loginHandler } from "../handlers/loginHandler.ts";
 // import { updateWinnersHandler } from "../handlers/updateWinnersHandler.ts";
 // import { createGameHandler } from "../handlers/createGameHandler.ts";
 import { createRoomHandler } from "../handlers/createRoomHandler.ts";
-// import { addShipsHandler } from "../handlers/addShipsHandler.ts";
+import { addShipsHandler } from "../handlers/addShipsHandler.ts";
 import { addUserToRoomHandler } from "../handlers/addUserToRoomHandler.ts";
-// import { attackHandler } from "../handlers/attackHandler.ts";
+import { attackHandler } from "../handlers/attackHandler.ts";
 // import { randomAttackHandler } from "../handlers/randomAttackHandler.ts";
 
 export const createWebsocketServer = (httpServer: Server) => {
@@ -24,7 +24,7 @@ export const createWebsocketServer = (httpServer: Server) => {
   console.log("connection done");
 
   ws.on("message", (message) => {
-    const messageData: ICommandPlayerClient | AddUserToRoom= JSON.parse(message.toString());
+    const messageData: ICommandPlayerClient | AddUserToRoom | ICommandShipsPlayer | ICommandGamePlayer = JSON.parse(message.toString());
     console.log("Message from client parsed:", messageData);
     try {
       if (messageData.type === typesOfCommandsUsers.REG) {
@@ -35,10 +35,10 @@ export const createWebsocketServer = (httpServer: Server) => {
         createRoomHandler(ws);
       } else if (messageData.type === typesOfCommandsRoom.ADD_USER_FOR_ROOM) {
         addUserToRoomHandler(JSON.parse((messageData.data).toString()), ws);
-      // } else if (messageData.type === typesOfCommandsShips.ADD_SHIP) {
-      //   addShipsHandler(JSON.parse((messageData.data).toString()), ws);
-      // } else if (messageData.type === typesOfCommandsGame.ATTACK) {
-      //   attackHandler(JSON.parse((messageData.data).toString()), ws);
+      } else if (messageData.type === typesOfCommandsShips.ADD_SHIP) {
+        addShipsHandler(JSON.parse((messageData.data).toString()));
+      } else if (messageData.type === typesOfCommandsGame.ATTACK) {
+        attackHandler(JSON.parse((messageData.data).toString()), ws);
       // } else if (messageData.type === typesOfCommandsGame.RANDOM_ATTACK) {
       //   randomAttackHandler(JSON.parse((messageData.data).toString()), ws);
       } 

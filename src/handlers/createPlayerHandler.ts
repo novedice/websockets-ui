@@ -12,8 +12,8 @@ export const createPlayer = (data: createPlayerData, ws: WebSocket) => {
   players.push({...data, id: playerId});
   console.log('players:', players);
  
-  connections.set(ws, data.name);
-  nameConnections.set(data.name, ws);
+  connections.set(ws, playerId);
+  nameConnections.set(playerId, ws);
 
   ws.send(JSON.stringify({
         type: 'reg', 

@@ -5,7 +5,7 @@ import type { WebSocket } from "ws";
 import { updateWinnersHandler } from "./updateWinnersHandler.ts";
 
 export const connections = new Map<WebSocket, string>();
-export const nameConnections = new Map<string, WebSocket>()
+export const nameConnections = new Map<string | number, WebSocket>()
 
 export const loginHandler = (data: createPlayerData, ws: WebSocket) => {
   const index = players.findIndex((player) => player.name === data.name);
@@ -36,7 +36,6 @@ export const loginHandler = (data: createPlayerData, ws: WebSocket) => {
       }))
       updateWinnersHandler(ws);
     } else {
-      console.log(`player ${data.name} exists, but password ${data.password} not correct`)
       ws.send(JSON.stringify({
         type: 'reg', 
         data: JSON.stringify({

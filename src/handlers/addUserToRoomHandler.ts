@@ -6,19 +6,16 @@ import { createGameHandler } from "./createGameHandler.ts";
 
 export const addUserToRoomHandler = (data: addUserToRoom, ws: WebSocket) => {
   console.log('user to room', data);
-  const player2Name: string = connections.get(ws) as string;
-  let player1Name: string;
+  const player2Index: string = connections.get(ws) as string;
   const roomIndex = rooms.findIndex(room => room.roomId === data.indexRoom)
 
   if (rooms[roomIndex] && rooms[roomIndex].roomUsers[0]) {
-    player1Name = rooms[roomIndex].roomUsers[0].name;
+    const player1Index = rooms[roomIndex].roomUsers[0].index;
     rooms.splice(roomIndex,1);
-    createGameHandler(player1Name, player2Name, ws);
+    createGameHandler(player1Index, player2Index);
     ws.send(JSON.stringify({
       type: "update_room",
       data: JSON.stringify(rooms)
   }))
   }
-
-  ws.send(JSON.stringify('user to room'));
 }

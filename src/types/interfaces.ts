@@ -90,13 +90,27 @@ export interface ICommandRoomServer {
     id: 0;
 };
 
-export interface ICommandShipsPlayer {
-    type: typesOfCommandsShips;
-    data: {
-      gameID: number | string;
+export interface IGameInfo {
+  idGame: string | number;
+  idPlayer1: {
+    id: string | number;
+    ships: IShipPosition[];
+  };
+  idPlayer2: {
+    id: number | string;
+    ships: IShipPosition[];
+  };
+}
+
+export interface IDataShipsPlayer {
+      gameId: number | string;
       ships: IShipPosition [];
       indexPlayer: number | string;
-    };
+}
+
+export interface ICommandShipsPlayer {
+    type: typesOfCommandsShips;
+    data: IDataShipsPlayer;
     id: 0;
 };
 
@@ -109,14 +123,16 @@ export interface ICommandShipsServer {
     id: 0;
 };
 
+export interface IAttack {
+  gameId: number | string;
+  x: number;
+  y: number;
+  indexPlayer: number | string;
+}
+
 export interface ICommandGamePlayer {
     type: typesOfCommandsGame;
-    data: {
-      gameID: number | string;
-      x: number;
-      y: number;
-      indexPlayer: number | string;
-    }
+    data: IAttack;
     id: 0;
 };
 
@@ -129,6 +145,13 @@ export interface ICommandGameServer {
     }
     id: 0;
 };
+
+export interface IBoard {
+
+}
+
+export type cellType = "e" | "hk" | "hs" | "lk" | "ls" | "mk" | "ms" | "sm" | "sk" | "h" | "";
+export type shootType = "killed" | "missed" | "shoot" 
 
 
 
