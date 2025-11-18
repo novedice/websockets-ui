@@ -1,3 +1,24 @@
+# RSSchool NodeJS websocket 
+## Battleship
+
+1. Clone or download repo
+2. Change the branch to dev `git checkout dev`
+3. Install `npm install`
+4. Launch the application in dev mode: `npm run dev`
+
+Open `http://localhost:3000` in your browser.
+
+
+
+
+
+
+
+
+
+
+
+
 # RSSchool NodeJS websocket task template
 > Static http server and base task packages. 
 > By default WebSocket client tries to connect to the 3000 port.
