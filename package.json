@@ -5,10 +5,8 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node --enable-source-maps dist/index.js",
+
     "dev": "node --loader ts-node/esm src/index.ts",
-    "build": "tsc",
-    "test": "jest",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint \"src/**/*.ts\" --fix"
   },
